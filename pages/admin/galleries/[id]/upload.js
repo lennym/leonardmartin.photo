@@ -15,10 +15,59 @@ import Image from '../../../../components/image'
 
 export const getServerSideProps = withAuthGateway(withGallery())
 
+function UploadCount() {
+  const { uploads } = useSelector(state => state)
+  const total = Object.values(uploads).length
+  const done = Object.values(uploads).filter(f => f.completed).length
+  return <p className="m-2 text-sm text-gray-400">Uploaded {done}/{total}</p>
+}
+
+function UploadStatus({ path, started, completed, skipped, thumbnail }) {
+  let state = '...'
+  if (started) {
+    state = 'Uploading...'
+  }
+  if (completed) {
+    state = '✅'
+  }
+  if (skipped) {
+    state = '🕶'
+  }
+  return <tr className="text-gray-400 text-base">
+    <td className="px-2 py-1 w-12"><Image src={`data:image/jpeg;base64,${thumbnail}`} className="w-12" /></td>
+    <td className="px-2 py-1">{ path }</td>
+    <td className="px-2 py-1 text-right">{ state }</td>
+  </tr>
+}
+
+function UploadList() {
+  const { uploads } = useSelector(state => state)
+
+  const isUploading = !!Object.keys(uploads).length
+
+  if (!isUploading) {
+    return null;
+  }
+  return (
+    <div className="mb-6 border w-full">
+      <UploadCount />
+      <div className="max-h-96 overflow-scroll">
+        <table className="w-full">
+          <tbody>
+            {
+              Object.values(uploads).map(upload => <UploadStatus {...upload} key={upload.path} />)
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+
 export default function Upload({ id, title }) {
 
   const dispatch = useDispatch()
-  const { uploads } = useSelector(state => state)
 
   const hash = file => {
     const hasher = new md5.ArrayBuffer()
@@ -81,52 +130,6 @@ export default function Upload({ id, title }) {
 
     }
   }, [])
-
-  const isUploading = !!Object.keys(uploads).length
-
-  const UploadStatus = ({ path, started, completed, skipped, thumbnail }) => {
-    let state = '...'
-    if (started) {
-      state = 'Uploading...'
-    }
-    if (completed) {
-      state = '✅'
-    }
-    if (skipped) {
-      state = '🕶'
-    }
-    return <tr className="text-gray-400 text-base">
-      <td className="px-2 py-1 w-12"><Image src={`data:image/jpeg;base64,${thumbnail}`} className="w-12" /></td>
-      <td className="px-2 py-1">{ path }</td>
-      <td className="px-2 py-1 text-right">{ state }</td>
-    </tr>
-  }
-
-  const UploadCount = () => {
-    const total = Object.values(uploads).length
-    const done = Object.values(uploads).filter(f => f.completed).length
-    return <p className="m-2 text-sm text-gray-400">Uploaded {done}/{total}</p>
-  }
-
-  const UploadList = () => {
-    if (!isUploading) {
-      return null;
-    }
-    return (
-      <div className="mb-6 border w-full">
-        <UploadCount />
-        <div className="max-h-96 overflow-scroll">
-          <table className="w-full">
-            <tbody>
-              {
-                Object.values(uploads).map(upload => <UploadStatus {...upload} key={upload.path} />)
-              }
-            </tbody>
-          </table>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <Fragment>
