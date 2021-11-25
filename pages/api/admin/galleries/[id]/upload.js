@@ -48,9 +48,9 @@ const Upload = withApiAuthGateway(async function(req, res) {
       })
       busboy.on('file', (field, Body, file) => {
         if (skipped) {
-          resolve()
           let body = '';
           Body.on('data', chunk => body += chunk)
+          Body.on('end', resolve)
           return;
         }
         const ext = path.extname(file)
