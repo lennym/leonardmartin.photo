@@ -85,7 +85,7 @@ function Overlay({ id, imageId, title, index, images }) {
           </a>
         )
       }
-      <Image src={`/preview/${id}/${imageId}?size=medium`} layout="fill" objectFit="contain" className="shadow-lg" />
+      <Image src={`/preview/${id}/${imageId}?size=medium`} layout="fill" objectFit="contain" className="shadow-lg" unoptimized={true} />
     </div>
     {
       !maximised && (

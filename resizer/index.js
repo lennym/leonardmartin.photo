@@ -46,11 +46,11 @@ exports.handler = async (event, context, callback) => {
     return;
   }
 
-
+  // do the small thumbnail last because it's the most obvious to see when it's missing
   const sizes = {
+    medium: 2400,
     tiny: 24,
     small: 240,
-    medium: 2400
   };
 
   for await (size of Object.keys(sizes)) {
