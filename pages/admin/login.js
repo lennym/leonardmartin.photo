@@ -24,7 +24,7 @@ export default function Login({  }) {
     e.preventDefault()
     const password = e.target.password.value
     const body = JSON.stringify({ password })
-    const success = await fetch(`/api/login`, { method: 'post', body, headers: { 'Content-Type': 'application/json' } })
+    const success = await fetch(`/api/admin/login`, { method: 'post', body, headers: { 'Content-Type': 'application/json' } })
     if (success.status !== 200) {
       return setError(true)
     }
