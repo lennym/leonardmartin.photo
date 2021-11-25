@@ -55,21 +55,30 @@ export default function Upload({ id, title }) {
     }
     for await (const file of files) {
       dispatch({ type: 'START_FILE', file })
-
       const checksum = await hash(file)
-      const body = new FormData()
-      body.append('exif', JSON.stringify(file.exif))
-      body.append('file', file)
-      const result = await fetch(`/api/admin/galleries/${id}/upload`, {
-        method: 'POST',
-        body,
-        headers: {
-          'x-md5': checksum,
-          'x-filename': file.path
-        }
+      const headers = {
+        'x-md5': checksum,
+        'x-filename': file.path
+      }
+      const check = await fetch(`/api/admin/galleries/${id}/upload`, {
+        headers
       })
-      const json = await result.json()
-      dispatch({ type: 'FINISH_FILE', file: { ...file, skipped: json.skipped } })
+      const response = await check.json()
+      if (response.existing) {
+        dispatch({ type: 'FINISH_FILE', file: { ...file, skipped: true } })
+      } else {
+        const body = new FormData()
+        body.append('exif', JSON.stringify(file.exif))
+        body.append('file', file)
+        const result = await fetch(`/api/admin/galleries/${id}/upload`, {
+          method: 'POST',
+          body,
+          headers
+        })
+        const json = await result.json()
+        dispatch({ type: 'FINISH_FILE', file: { ...file, skipped: json.skipped } })
+      }
+
     }
   }, [])
 
