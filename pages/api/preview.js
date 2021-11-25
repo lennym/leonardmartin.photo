@@ -1,5 +1,4 @@
 import readPhoto from '../../lib/read-photo'
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 export default async function helloAPI(req, res) {
   const { gallery, image, size = 'medium' } = req.query

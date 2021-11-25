@@ -1,11 +1,11 @@
 const { loadEnvConfig } = require('@next/env')
 
 const dev = process.env.NODE_ENV !== 'production'
-const { PG_URI } = loadEnvConfig('./', dev).combinedEnv
+const { DATABASE_URL } = loadEnvConfig('./', dev).combinedEnv
 
 module.exports = {
   client: 'pg',
-  connection: PG_URI,
+  connection: DATABASE_URL,
   migrations: {
     directory: './knex/migrations',
   },
