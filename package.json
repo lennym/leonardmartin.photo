@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "npm run migrate && next build",
     "start": "next start -p $PORT",
-    "migrate": "knex migrate:up"
+    "migrate": "knex migrate:latest"
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.3.0",
