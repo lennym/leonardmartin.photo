@@ -1,0 +1,11 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: test-password
+      POSTGRES_DB: 'photos'
+      PORT: 5432
+    ports:
+      - "5433:5432"

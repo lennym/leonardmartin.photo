@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-gray-600;
+    @apply font-sans;
+  }
+  h1 {
+    @apply text-3xl;
+    @apply md:text-5xl;
+    @apply lg:text-5xl;
+    @apply xl:text-6xl;
+    @apply font-normal;
+    @apply mb-6;
+    @apply lg:mb-12;
+  }
+  h2 {
+    @apply text-xl;
+    @apply md:text-2xl;
+    @apply xl:text-3xl;
+    @apply font-normal;
+    @apply mb-4;
+    @apply lg:mb-8;
+  }
+  p {
+    @apply text-lg;
+    @apply md:text-xl;
+    @apply mb-6;
+    @apply lg:mb-12;
+  }
+  a {
+    @apply text-red-500;
+  }
+  .btn {
+    @apply bg-red-500;
+    @apply text-gray-100;
+    @apply hover:bg-red-600;
+    @apply hover:text-gray-200;
+    @apply shadow-md;
+    @apply px-6;
+    @apply py-3;
+    @apply rounded-full;
+    @apply transition-all;
+    @apply mr-4;
+    @apply whitespace-nowrap;
+  }
+  header,
+  section,
+  footer {
+    @apply w-full;
+    @apply px-6;
+    @apply sm:px-10;
+    @apply md:px-16;
+  }
+
+}
