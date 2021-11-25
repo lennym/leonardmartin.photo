@@ -11,6 +11,7 @@ export const getServerSideProps = withAuthGateway(withGallery())
 
 function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
   const [refreshing, setRefreshing] = useState(false)
+  const [cachebuster, setCacheBuster] = useState('')
 
   const refresh = async () => {
     setRefreshing(true)
@@ -19,6 +20,7 @@ function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
       body: JSON.stringify({ imageId: id }),
       headers: { 'Content-Type': 'application/json' }
     })
+    setCacheBuster(Date.now())
     setRefreshing(false)
   }
 
@@ -27,7 +29,7 @@ function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
       <input type="radio" name="cover" value={id} checked={id === coverId} onChange={e => onSetCover(e.target.value)} />
       <button onClick={() => refresh()} disabled={refreshing}>{refreshing ? '⏱' : '⟲'}</button>
     </div>
-    <Image src={`/preview/${galleryId}/${id}?size=small`} className="relative z-0" />
+    <Image src={`/preview/${galleryId}/${id}?size=small&cachebuster=${cachebuster}`} className="relative z-0" />
   </div>
 
 }
