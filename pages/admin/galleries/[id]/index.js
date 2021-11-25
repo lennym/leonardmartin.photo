@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { withAuthGateway } from '../../../../lib/session'
 import { withGallery } from '../../../../lib/get-gallery'
@@ -11,7 +12,9 @@ export const getServerSideProps = withAuthGateway(withGallery())
 
 function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
   const [refreshing, setRefreshing] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [cachebuster, setCacheBuster] = useState('')
+  const router = useRouter();
 
   const refresh = async () => {
     setRefreshing(true)
@@ -24,10 +27,23 @@ function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
     setRefreshing(false)
   }
 
+  const deleteImage = async () => {
+    confirm('Delete image?')
+    setDeleting(true)
+    const response = await fetch(`/api/admin/galleries/${galleryId}/delete`, {
+      method: 'POST',
+      body: JSON.stringify({ imageId: id }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    setDeleting(false)
+    router.reload()
+  }
+
   return <div className="relative">
     <div className="absolute z-10 top-1 right-1 w-4 h-4">
       <input type="radio" name="cover" value={id} checked={id === coverId} onChange={e => onSetCover(e.target.value)} />
       <button onClick={() => refresh()} disabled={refreshing}>{refreshing ? '⏱' : '⟲'}</button>
+      <button onClick={() => deleteImage()} disabled={deleting}>{deleting ? '⏱' : '🚫'}</button>
     </div>
     <Image src={`/preview/${galleryId}/${id}?size=small&cachebuster=${cachebuster}`} className="relative z-0" />
   </div>
