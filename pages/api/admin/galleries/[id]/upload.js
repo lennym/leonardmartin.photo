@@ -24,53 +24,56 @@ const Upload = withApiAuthGateway(async function(req, res) {
   let skipped = false
   let exif
   let created
+  try {
+    const filename = req.headers['x-filename'];
+    const hash = req.headers['x-md5']
 
-  const filename = req.headers['x-filename'];
-  const hash = req.headers['x-md5']
+    const existing = await knex('images').where({ gallery_id, filename }).first()
 
-  const existing = await knex('images').where({ gallery_id, filename }).first()
-
-  if (existing) {
-    if (existing.hash === hash) {
-      skipped = true
+    if (existing) {
+      if (existing.hash === hash) {
+        skipped = true
+      }
+      id = existing.id
     }
-    id = existing.id
-  }
 
-  const busboy = new Busboy({ headers: req.headers, filesLimit: 1 })
+    const busboy = new Busboy({ headers: req.headers, filesLimit: 1 })
 
-  await new Promise((resolve, reject) => {
-    busboy.on('field', (name, value) => {
-      if (name === 'exif') {
-        exif = JSON.parse(value)
-        created = new Date(exif.CreateDate * 1000).toISOString()
-      }
-    })
-    busboy.on('file', (field, Body, file) => {
-      if (skipped) {
-        Body.resume()
-        return resolve()
-      }
-      const ext = path.extname(file)
-      const Key = `${gallery_id}/${id}${ext}`
-      s3.upload({
-        Bucket: process.env.S3_BUCKET,
-        Key,
-        Body
-      }, (err, result) => {
-        err ? reject(err) : resolve()
+    await new Promise((resolve, reject) => {
+      busboy.on('field', (name, value) => {
+        if (name === 'exif') {
+          exif = JSON.parse(value)
+          created = new Date(exif.CreateDate * 1000).toISOString()
+        }
       })
+      busboy.on('file', (field, Body, file) => {
+        if (skipped) {
+          Body.resume()
+          return resolve()
+        }
+        const ext = path.extname(file)
+        const Key = `${gallery_id}/${id}${ext}`
+        s3.upload({
+          Bucket: process.env.S3_BUCKET,
+          Key,
+          Body
+        }, (err, result) => {
+          err ? reject(err) : resolve()
+        })
+      })
+      req.pipe(busboy)
     })
-    req.pipe(busboy)
-  })
 
-  if (existing) {
-    await knex('images').update({ hash, created, exif }).where({ id });
-  } else {
-    await knex('images').insert({ id, gallery_id, filename, hash, created, exif });
+    if (existing) {
+      await knex('images').update({ hash, created, exif }).where({ id });
+    } else {
+      await knex('images').insert({ id, gallery_id, filename, hash, created, exif });
+    }
+
+    return res.status(200).json({ id, gallery_id, filename, hash, skipped });
+  } catch (e) {
+    res.status(500).json({ message: e.message, stack: e.stack })
   }
-
-  return res.status(200).json({ id, gallery_id, filename, hash, skipped });
 
 })
 
