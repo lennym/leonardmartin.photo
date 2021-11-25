@@ -35,6 +35,8 @@ const Upload = withApiAuthGateway(async function(req, res) {
         skipped = true
       }
       id = existing.id
+      console.log('found existing')
+      console.log(existing.hash === hash)
     }
 
     const busboy = new Busboy({ headers: req.headers, filesLimit: 1 })

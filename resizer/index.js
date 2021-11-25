@@ -61,6 +61,8 @@ exports.handler = async (event, context, callback) => {
     const target = metadata.height > metadata.width ? { height: sizes[size] } : { width: sizes[size] };
     let buffer;
 
+    console.log(`Resizing to ${Object.keys(target).join()}: ${Object.values(target).join()}`)
+
     if (size === 'medium') {
       buffer = await image.resize(target).composite([{ input: './watermark.png', gravity: 'southeast' }]).toBuffer();
     } else {
@@ -71,6 +73,7 @@ exports.handler = async (event, context, callback) => {
     const gallery = path.dirname(srcKey)
     const name = path.basename(srcKey, ext);
 
+    console.log(`Writing to: "thumbnails/${gallery}/${name}.${size}${ext}"`)
     const destparams = {
       Bucket: srcBucket,
       Key: `thumbnails/${gallery}/${name}.${size}${ext}`,
