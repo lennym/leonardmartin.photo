@@ -35,8 +35,6 @@ const Upload = withApiAuthGateway(async function(req, res) {
         skipped = true
       }
       id = existing.id
-      console.log('found existing')
-      console.log(existing.hash === hash)
     }
 
     const busboy = new Busboy({ headers: req.headers, filesLimit: 1 })
@@ -50,8 +48,10 @@ const Upload = withApiAuthGateway(async function(req, res) {
       })
       busboy.on('file', (field, Body, file) => {
         if (skipped) {
-          Body.resume()
-          return resolve()
+          resolve()
+          let body = '';
+          Body.on('data', chunk => body += chunk)
+          return;
         }
         const ext = path.extname(file)
         const Key = `${gallery_id}/${id}${ext}`
