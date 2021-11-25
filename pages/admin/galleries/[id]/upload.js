@@ -93,18 +93,29 @@ export default function Upload({ id, title }) {
     </tr>
   }
 
+  const UploadCount = () => {
+    const total = Object.values(uploads).length
+    const done = Object.values(uploads).filter(f => f.completed).length
+    return <p className="m-2 text-sm text-gray-400">Uploaded {done}/{total}</p>
+  }
+
   const UploadList = () => {
     if (!isUploading) {
       return null;
     }
     return (
-      <table className="mb-6 border w-full">
-        <tbody>
-          {
-            Object.values(uploads).map(upload => <UploadStatus {...upload} key={upload.path} />)
-          }
-        </tbody>
-      </table>
+      <div className="mb-6 border w-full">
+        <UploadCount />
+        <div className="max-h-96 overflow-scroll">
+          <table className="w-full">
+            <tbody>
+              {
+                Object.values(uploads).map(upload => <UploadStatus {...upload} key={upload.path} />)
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
     )
   }
 
@@ -117,7 +128,7 @@ export default function Upload({ id, title }) {
           <div className="border rounded-md bg-gray-200 mb-12 flex justify-center items-center p-8">
             <div {...getRootProps()}>
               <input {...getInputProps()} />
-              <p className="m-0">Drag 'n' drop some files here, or click to select files</p>
+              <p className="m-0">Select files</p>
             </div>
           </div>
         )}
