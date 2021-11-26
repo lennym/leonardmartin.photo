@@ -1,6 +1,10 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
+import Insta from './icons/instagram'
+import Twitter from './icons/twitter'
+import Email from './icons/email'
+
 import Basket from './basket'
 
 export default function Layout({ children, ...pageProps }) {
@@ -14,7 +18,7 @@ export default function Layout({ children, ...pageProps }) {
       {
         pageProps.header !== false && (
           <header className="py-6 border-b mb-8 flex justify-between items-center">
-            <h1 className="text-xl my-0"><Link href="/"><a><span className="text-gray-500">leonardmartin</span><span className="text-red-500">.photo</span></a></Link></h1>
+            <h1 className="text-2xl my-0"><Link href="/"><a><span className="text-gray-500">leonardmartin</span><span className="text-red-500">.photo</span></a></Link></h1>
             <nav className="flex flex-0 items-center text-gray-500">
               <Link href="/about"><a className="ml-4 hidden sm:inline">About me</a></Link>
               <Link href="/galleries"><a className="ml-4 hidden sm:inline">Galleries</a></Link>
@@ -26,8 +30,14 @@ export default function Layout({ children, ...pageProps }) {
       <main>
         { children }
       </main>
-      <footer className="flex items-center mt-8 border-t py-6">
+      <footer className="flex items-center justify-between mt-8 border-t py-6">
         <p className="mb-0">&copy; Leonard Martin</p>
+        <p className="mb-0 flex">
+          <a href="mailto:info@leonardmartin.photo" className="ml-2"><Email size={32} /></a>
+          <a href="https://instagram.com/lennygoesoutside" className="ml-2"><Twitter size={32} /></a>
+          <a href="https://twitter.com/lennym" className="ml-2"><Insta size={32} /></a>
+        </p>
+
       </footer>
     </div>
   )
