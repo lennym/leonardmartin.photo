@@ -111,18 +111,20 @@ export default function Gallery(props) {
   return (
     <section>
       <h1 className="mb-6">{ title }</h1>
-      <p className="text-gray-400">
+      <p className="text-gray-400 mb-0">
         <TimeStamp timestamp={updated} />
+      </p>
+      <p>
         {
           tags.map(tag => {
-            return <span key={tag} className="inline-block bg-gray-200 rounded-md px-2 mx-1">{tag}</span>
+            return <span key={tag} className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</span>
           })
         }
       </p>
       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
         {
           images.map((image, i) => {
-            const isCallout = (i % 12) === 0
+            const isCallout = i === 0
             const size = isCallout ? 'medium' : 'small'
             return <ImagePreview key={image.id} {...image} className={ isCallout ? 'md:col-span-2 md:row-span-2' : '' } size={size} />
           })

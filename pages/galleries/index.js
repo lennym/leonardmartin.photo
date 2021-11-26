@@ -60,7 +60,7 @@ export default function Galleries({ galleries }) {
           tags.map(tag => <Tag key={tag.value} onClick={() => toggleTag(tag.value)} selected={false} label={tag.value} count={tag.count} />)
         }
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-12">
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 mb-12">
         {
           galleries.map(gallery => (
             <GalleryPreview key={gallery.id} {...gallery} />

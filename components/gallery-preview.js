@@ -9,17 +9,19 @@ export default function GalleryPreview({ className, cover, title, id, updated, t
       <Link href={`/galleries/${id}`}>
         <a className="">
           <Image src={`/preview/${id}/${cover}?size=medium`} />
-          <p className="pt-4 px-6 mb-0">{ title }</p>
-          <p className="px-6 mb-0 text-gray-400 text-base">
-            <TimeStamp timestamp={updated} />
-          </p>
-          <p className="pb-4 px-6 mb-0 text-gray-400 text-base">
-            {
-              tags.map(tag => {
-                return <span key={tag} className="inline-block bg-gray-100 rounded-md px-2 mr-1 mb-1">{tag}</span>
-              })
-            }
-          </p>
+          <div className="py-1 sm:py-3 px-2 sm:px-4">
+            <p className="mb-0">{ title }</p>
+            <p className="mb-0 text-gray-400 text-base">
+              <TimeStamp timestamp={updated} />
+            </p>
+            <p className="mb-0 text-gray-400 text-base">
+              {
+                tags.map(tag => {
+                  return <span key={tag} className="inline-block bg-gray-100 rounded-md px-2 mr-1 mb-1">{tag}</span>
+                })
+              }
+            </p>
+          </div>
         </a>
       </Link>
     </div>
