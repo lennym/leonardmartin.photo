@@ -22,7 +22,7 @@ function UploadCount() {
   return <p className="m-2 text-sm text-gray-400">Uploaded {done}/{total}</p>
 }
 
-function UploadStatus({ path, started, completed, skipped, thumbnail }) {
+function UploadStatus({ path, started, completed, skipped, failed, thumbnail }) {
   let state = '...'
   if (started) {
     state = 'Uploading...'
@@ -32,6 +32,9 @@ function UploadStatus({ path, started, completed, skipped, thumbnail }) {
   }
   if (skipped) {
     state = '🕶'
+  }
+  if (failed) {
+    state = '🚫'
   }
   return <tr className="text-gray-400 text-base">
     <td className="px-2 py-1 w-12"><Image src={`data:image/jpeg;base64,${thumbnail}`} className="w-12" /></td>
@@ -119,13 +122,17 @@ export default function Upload({ id, title }) {
         const body = new FormData()
         body.append('exif', JSON.stringify(file.exif))
         body.append('file', file)
-        const result = await fetch(`/api/admin/galleries/${id}/upload`, {
-          method: 'POST',
-          body,
-          headers
-        })
-        const json = await result.json()
-        dispatch({ type: 'FINISH_FILE', file: { ...file, skipped: json.skipped } })
+        try {
+          const result = await fetch(`/api/admin/galleries/${id}/upload`, {
+            method: 'POST',
+            body,
+            headers
+          })
+          const json = await result.json()
+          dispatch({ type: 'FINISH_FILE', file: { ...file, skipped: json.skipped } })
+        } catch (e) {
+          dispatch({ type: 'FAILED_FILE', file })
+        }
       }
 
     }

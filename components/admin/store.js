@@ -29,6 +29,14 @@ const uploads = (state = {}, action = {}) => {
           completed: true
         }
       }
+    case 'FAILED_FILE':
+      return {
+        ...state,
+        [file.path]: {
+          ...state[file.path],
+          failed: true
+        }
+      }
     default:
       return state
   }
