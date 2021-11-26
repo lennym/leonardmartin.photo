@@ -50,7 +50,7 @@ exports.handler = async (event, context, callback) => {
   const sizes = {
     medium: 2400,
     tiny: 24,
-    small: 240,
+    small: 720,
   };
 
   for await (size of Object.keys(sizes)) {

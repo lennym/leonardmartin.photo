@@ -136,7 +136,7 @@ export default function Gallery(props) {
       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
         {
           images.map((image, i) => {
-            return <ImagePreview key={image.id} {...image} className={getCallout(i)} size="medium" />
+            return <ImagePreview key={image.id} {...image} className={getCallout(i)} size="small" />
           })
         }
       </div>
