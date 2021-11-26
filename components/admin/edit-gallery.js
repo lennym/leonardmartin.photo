@@ -46,7 +46,7 @@ export default function EditGallery({ id, title = '', updated, published = false
       <input type="text" className="p-2 border border-gray-200 rounded-md" name="tags" id="tags" defaultValue={tags} />
 
       <div className="flex items-center">
-        <input type="checkbox" className="border border-gray-200 rounded-md w-8 h-8 mr-2" name="public" id="public" value="true" defultChecked={published} />
+        <input type="checkbox" className="border border-gray-200 rounded-md w-8 h-8 mr-2" name="public" id="public" value="true" defaultChecked={published} />
         <label htmlFor="public">Published</label>
       </div>
 

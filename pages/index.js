@@ -20,7 +20,7 @@ export default function Home({ galleries }) {
     <Fragment>
       <section className="lg:flex items-center justify-between mt-0 sm:mt-8 lg:mt-20 mb-8 lg:mb-16 py-6 bg-white shadow-sm">
         <div className="mr-6 lg: mr-12">
-          <h1 className="text-gray-500">leonardmartin<span className="text-red-500">.photo</span></h1>
+          <h1 className="text-gray-500 mb-2">leonardmartin<span className="text-red-500">.photo</span></h1>
 
           <p className="mb-12 lg:mb-16 text-gray-500 text-lg md:text-2xl">Freelance sports photographer</p>
 

@@ -14,7 +14,6 @@
     @apply xl:text-6xl;
     @apply font-normal;
     @apply mb-6;
-    @apply lg:mb-12;
   }
   h2 {
     @apply text-xl;
