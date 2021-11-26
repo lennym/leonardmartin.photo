@@ -50,7 +50,7 @@ function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
 
 }
 
-export default function Gallery({ id, title, updated, cover, images = [] }) {
+export default function Gallery({ id, title, updated, cover, images = [], tags=[] }) {
 
   const [coverId, setCover] = useState(cover)
 
@@ -69,6 +69,13 @@ export default function Gallery({ id, title, updated, cover, images = [] }) {
       		<h1>{ title }</h1>
           <p className="mb-0 text-gray-400 text-base">/{ id }</p>
           <p className="mb-0 text-gray-500 text-base"><TimeStamp timestamp={ updated} /></p>
+          <p className="mb-0 text-sm">
+            {
+              tags.map(tag => {
+                return <span key={tag} className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1">{tag}</span>
+              })
+            }
+          </p>
           <ImagePreview gallery_id={id} id={coverId} size="medium" className="mt-4 mb-12" />
           <p>
           	<Link href={`/admin/galleries/${id}/edit`}><a className="btn">Edit details</a></Link>

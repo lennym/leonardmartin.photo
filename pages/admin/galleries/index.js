@@ -33,6 +33,13 @@ export default function Galleries({ galleries }) {
                   <h3 className="text-red-500">{ gallery.title } ({ gallery.images })</h3>
                   <p className="mb-0 text-gray-400 text-base">/{ gallery.id }</p>
                   <p className="mb-0 text-gray-500 text-base"><TimeStamp timestamp={ gallery.updated} /></p>
+                  <p className="mb-0 text-sm">
+                    {
+                      gallery.tags.map(tag => {
+                        return <span key={tag} className="inline-block bg-gray-100 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</span>
+                      })
+                    }
+                  </p>
                 </div>
               </a>
             </Link>
