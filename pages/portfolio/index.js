@@ -5,7 +5,7 @@ export default function Portfolio() {
     <section className="text-center">
       <h1>About me</h1>
       <p className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden relative shadow-md"><Image src="/images/lenny.jpg" layout="fill" /></p>
-      <p>I am Leonard Martin, a sports photographer based in North London.</p>
+      <p>I am Leonard Martin, an amateur sports photographer based in North London.</p>
 
       <div className="-mx-6 mb-12">
         <div className="relative aspect-w-9 aspect-h-4"><Image src="/images/southerns.jpg" layout="fill" /></div>
