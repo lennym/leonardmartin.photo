@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import useSWR from 'swr'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import StripeCheckout from 'react-stripe-checkout'
 
 import Image from '../../components/image'
@@ -21,17 +22,36 @@ export default function Basket({ stripeKey }) {
   const { data = {}, mutate } = useSWR('/api/basket', url => fetch(url).then(response => response.json()))
   const { basket = [] } = data
   const [amount, setAmount] = useState((basket.length * 5).toFixed(2))
+  const [email, setEmail] = useState('')
+  const paymentAmount = Math.round(100 * parseFloat(amount))
+  const router = useRouter();
 
   const onToken = async (token) => {
     const response = await fetch('/api/checkout', {
       method: 'POST',
-      body: JSON.stringify({token, amount}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      body: JSON.stringify({token, amount: paymentAmount}),
+      headers: { 'Content-Type': 'application/json' }
     })
     const result = await response.json()
-    setError(result.error)
+    if (response.error) {
+      return setError(result.error)
+    }
+    mutate('/api/basket', { basket: [] }, false)
+    router.push(`/orders/${result.id}`)
+  }
+
+  const download = async () => {
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ amount: 0, email }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const result = await response.json()
+    if (response.error) {
+      return setError(result.error)
+    }
+    mutate('/api/basket', { basket: [] }, false)
+    router.push(`/orders/${result.id}`)
   }
 
   const remove = async (id) => {
@@ -40,10 +60,12 @@ export default function Basket({ stripeKey }) {
       body: JSON.stringify({ id }),
       headers: { 'Content-Type': 'application/json' }
     })
-    mutate(request.json(), false)
+    mutate('/api/basket', request.json(), false)
   }
 
-  const paymentAmount = Math.round(100 * parseFloat(amount))
+  useEffect(() => {
+    setAmount((basket.length * 5).toFixed(2))
+  }, [basket])
 
   return (
     <section>
@@ -70,18 +92,30 @@ export default function Basket({ stripeKey }) {
         </div>
         <div className="relative">
           <div className="sticky top-0 rounded-md bg-white border p-4">
-            <h2>Total</h2>
-            <p className="flex items-center">
-              <span className="mr-2">£</span><input className="p-2 rounded-md border flex-grow text-right" type="text" onChange={e => setAmount(e.target.value)} defaultValue={amount} />
+            <h2>Checkout</h2>
+            <p className="mb-6">
+              <label htmlFor="amount">Total</label>
+              <div className="flex items-center">
+                <span className="mr-2">£</span>
+                <input className="p-2 rounded-md border flex-grow text-right" type="text" id="amount" onChange={e => setAmount(e.target.value)} value={amount} />
+              </div>
             </p>
-            <p className="flex text-base">
+            {
+              paymentAmount === 0 && (
+                <p className="mb-6">
+                  <label htmlFor="email">Email</label>
+                  <input className="p-2 rounded-md border w-full" type="text" id="email" onChange={e => setEmail(e.target.value)} value={email} />
+                </p>
+              )
+            }
+            <p className="mb-6 flex items-start">
               <input type="checkbox" id="declaration" className="border border-gray-200 rounded-md w-6 h-6 mr-2" onChange={e => accept(e.target.checked)} />
               <label htmlFor="declaration">I understand that photos are licensed for personal use only.</label>
             </p>
             <p className="text-right">
               {
                 paymentAmount === 0 ?
-                  <button className="btn mr-0 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!basket.length || !accepted}>Download</button> :
+                  <button className="btn mr-0 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!basket.length || !accepted} onClick={download}>Download</button> :
                   <StripeCheckout
                     token={onToken}
                     amount={paymentAmount}

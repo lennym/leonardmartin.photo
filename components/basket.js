@@ -9,7 +9,7 @@ function Count() {
   if (error || !data) {
     return null
   }
-  const { basket } = data
+  const { basket = [] } = data
   if (!basket.length) {
     return null
   }

@@ -7,5 +7,5 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function(knex) {
-  await knex.schema.dropTable('images')
+  await knex.schema.dropTable('tags')
 };

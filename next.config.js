@@ -12,6 +12,10 @@ module.exports = {
       {
         source: '/about',
         destination: '/portfolio'
+      },
+      {
+        source: '/orders/:id/download',
+        destination: '/api/download/:id'
       }
     ]
   }
