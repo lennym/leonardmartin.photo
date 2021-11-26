@@ -108,6 +108,18 @@ function Overlay({ id, imageId, title, index, images }) {
 
 export default function Gallery(props) {
   const { title, updated, images, tags } = props
+  const getCallout = index => {
+    const callout = {
+      sm: (index % 7 === 0),
+      lg: (index % 22 === 0) || (index % 22 === 15),
+      md: (index % 15 === 0) || (index % 15 === 10)
+    }
+    return ['sm', 'md', 'lg'].reduce((arr, size) => {
+      const classes = callout[size] ? `${size}:col-span-2 ${size}:row-span-2` : `${size}:col-span-1 ${size}:row-span-1`
+      return [...arr, classes]
+    }, []).join(' ')
+  }
+
   return (
     <section>
       <h1 className="mb-6">{ title }</h1>
@@ -124,9 +136,7 @@ export default function Gallery(props) {
       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
         {
           images.map((image, i) => {
-            const isCallout = i === 0
-            const size = isCallout ? 'medium' : 'small'
-            return <ImagePreview key={image.id} {...image} className={ isCallout ? 'md:col-span-2 md:row-span-2' : '' } size={size} />
+            return <ImagePreview key={image.id} {...image} className={getCallout(i)} size="medium" />
           })
         }
       </div>
