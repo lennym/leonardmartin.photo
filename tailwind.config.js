@@ -1,6 +1,16 @@
 module.exports = {
   mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  purge: {
+    content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+    safelist: [
+      'sm:col-span-1',
+      'sm:col-span-2',
+      'md:col-span-1',
+      'md:col-span-2',
+      'lg:col-span-1',
+      'lg:col-span-2',
+    ]
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
