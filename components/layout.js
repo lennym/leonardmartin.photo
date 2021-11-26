@@ -42,9 +42,9 @@ export default function Layout({ children, ...pageProps }) {
       <footer className="flex items-center justify-between mt-8 border-t py-6">
         <p className="mb-0">&copy; Leonard Martin</p>
         <p className="mb-0 flex">
-          <a href="mailto:info@leonardmartin.photo" className="ml-2"><Email size={32} /></a>
-          <a href="https://instagram.com/lennygoesoutside" className="ml-2"><Twitter size={32} /></a>
-          <a href="https://twitter.com/lennym" className="ml-2"><Insta size={32} /></a>
+          <a href="mailto:info@leonardmartin.photo" className="ml-2"><Email size={24} /></a>
+          <a href="https://instagram.com/lennygoesoutside" className="ml-2"><Twitter size={24} /></a>
+          <a href="https://twitter.com/lennym" className="ml-2"><Insta size={24} /></a>
         </p>
 
       </footer>
