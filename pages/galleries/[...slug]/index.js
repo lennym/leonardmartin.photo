@@ -129,7 +129,7 @@ function Overlay({ id, imageId, title, index, images }) {
           <h2 className="mb-2">{title}</h2>
           <p className="text-base text-gray-400 mb-4">{ index+1 }/{ images.length}</p>
           <Exif {...exif} />
-          <p className="mb-0">
+          <p className="mb-0 text-base">
             <button className="btn" onClick={() => addToBasket(imageId)}>{ inBasket ? 'Remove from download' : 'Add to download' }</button>
           </p>
         </div>
