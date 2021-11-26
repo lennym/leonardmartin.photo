@@ -27,6 +27,15 @@ export default function Layout({ children, ...pageProps }) {
           </header>
         )
       }
+      {
+        pageProps.header === false && (
+          <header className="py-6 flex justify-end items-center">
+            <nav className="flex items-center text-gray-500 text-right">
+              <Basket className="ml-4" />
+            </nav>
+          </header>
+        )
+      }
       <main>
         { children }
       </main>
