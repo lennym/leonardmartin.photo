@@ -105,11 +105,18 @@ function Overlay({ id, imageId, title, index, images }) {
 }
 
 export default function Gallery(props) {
-  const { title, updated, images } = props
+  const { title, updated, images, tags } = props
   return (
     <section>
       <h1 className="mb-6">{ title }</h1>
-      <p className="text-gray-400"><TimeStamp timestamp={updated} /></p>
+      <p className="text-gray-400">
+        <TimeStamp timestamp={updated} />
+        {
+          tags.map(tag => {
+            return <span key={tag} className="inline-block bg-gray-200 rounded-md px-2 mx-1">{tag}</span>
+          })
+        }
+      </p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
         {
           images.map(image => (
