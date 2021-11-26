@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import useSWR from 'swr'
+import { useSwipeable } from 'react-swipeable';
 
 import getGallery from '../../../lib/get-gallery'
 import withSessionSsr from '../../../lib/session'
@@ -22,27 +23,60 @@ export async function getServerSideProps({ params }) {
   }
 }
 
+function Exif({ FNumber, ISO, Model, LensModel, ExposureTime }) {
+  let exposure;
+  if (ExposureTime >= 1) {
+    exposure = `${ExposureTime}"`
+  } else if (ExposureTime) {
+    exposure = `1/${Math.round(1 / ExposureTime)}"`
+  }
+  return <div className="mb-6 hidden md:block">
+    { Model && <p className="mb-0 text-xs text-gray-400">{Model}</p> }
+    { LensModel && <p className="mb-0 text-xs text-gray-400">{LensModel}</p> }
+    { FNumber && <p className="mb-0 text-xs text-gray-400">f/{FNumber}</p> }
+    { exposure && <p className="mb-0 text-xs text-gray-400">{exposure}</p>}
+    { ISO && <p className="mb-0 text-xs text-gray-400">ISO{ISO}</p> }
+  </div>
+}
+
 function Overlay({ id, imageId, title, index, images }) {
+  if (!imageId) {
+    return null
+  }
   const router = useRouter()
   const [maximised, setMaximised] = useState(false)
   const { data, mutate } = useSWR('/api/basket', url => fetch(url).then(response => response.json()))
 
   const basket = data ? data.basket : []
   const inBasket = basket.some(image => image.id === imageId)
+  const { exif } = images.find(i => i.id === imageId)
+
+  const handlers = useSwipeable({
+    onSwiped: ({ dir }) => navigate(dir === 'Left' ? 'next': 'previous')
+  });
 
   const exit = () => {
     return router.replace(`/galleries/${id}`)
+  }
+
+  const navigate = direction => {
+    switch (direction) {
+      case 'previous':
+        const prevImage = images[(index - 1 + images.length) % images.length]
+        return router.replace(`/galleries/${id}/${prevImage.id}`)
+      case 'next':
+        const nextImage = images[(index + 1) % images.length]
+        return router.replace(`/galleries/${id}/${nextImage.id}`)
+    }
   }
 
   const keypress = (e) => {
     if (imageId) {
       switch (e.key) {
         case 'ArrowLeft':
-          const prevImage = images[(index - 1 + images.length) % images.length]
-          return router.replace(`/galleries/${id}/${prevImage.id}`)
+          return navigate('previous')
         case 'ArrowRight':
-          const nextImage = images[(index + 1) % images.length]
-          return router.replace(`/galleries/${id}/${nextImage.id}`)
+          return navigate('next')
         case 'ArrowUp':
           return setMaximised(true)
         case 'ArrowDown':
@@ -70,16 +104,13 @@ function Overlay({ id, imageId, title, index, images }) {
     mutate(request.json(), false)
   }
 
-  if (!imageId) {
-    return null;
-  }
   const style = {
     backgroundImage: `url("/preview/${id}/${imageId}?size=tiny")`
   }
 
-  return <div className="fixed inset-0 flex">
+  return <div className="fixed inset-0 flex flex-col md:flex-row" {...handlers} >
     <div className="absolute inset-0 w-full h-full bg-cover bg-gray-200" style={style} onClick={exit} />
-    <div className="flex-grow m-6 relative z-1 mr-4">
+    <div className="flex-grow m-2 md:m-6 relative z-1 md:mr-4">
       {
         maximised && (
           <a onClick={exit} className="absolute z-10 top-4 right-6 p-1 bg-gray-300 rounded-full flex cursor-pointer">
@@ -91,12 +122,13 @@ function Overlay({ id, imageId, title, index, images }) {
     </div>
     {
       !maximised && (
-        <div className="w-96 bg-gray-100 ml-4 p-4 relative z-1 m-6 shadow-md rounded-md">
+        <div className="md:w-72 bg-gray-100 md:ml-0 p-4 relative z-1 m-2 md:m-6 shadow-md rounded-md">
           <a onClick={exit} className="absolute top-4 right-4 p-1 bg-gray-300 rounded-full flex cursor-pointer">
             <CloseIcon size={20} className="text-white" />
           </a>
           <h2 className="mb-2">{title}</h2>
-          <p className="text-base text-gray-400">{ index+1 }/{ images.length}</p>
+          <p className="text-base text-gray-400 mb-4">{ index+1 }/{ images.length}</p>
+          <Exif {...exif} />
           <p className="mb-0">
             <button className="btn" onClick={() => addToBasket(imageId)}>{ inBasket ? 'Remove from download' : 'Add to download' }</button>
           </p>
