@@ -35,19 +35,21 @@ function Overlay({ id, imageId, title, index, images }) {
   }
 
   const keypress = (e) => {
-    switch (e.key) {
-      case 'ArrowLeft':
-        const prevImage = images[(index - 1 + images.length) % images.length]
-        return router.replace(`/galleries/${id}/${prevImage.id}`)
-      case 'ArrowRight':
-        const nextImage = images[(index + 1) % images.length]
-        return router.replace(`/galleries/${id}/${nextImage.id}`)
-      case 'ArrowUp':
-        return setMaximised(true)
-      case 'ArrowDown':
-        return setMaximised(false)
-      case 'Escape':
-        return exit()
+    if (imageId) {
+      switch (e.key) {
+        case 'ArrowLeft':
+          const prevImage = images[(index - 1 + images.length) % images.length]
+          return router.replace(`/galleries/${id}/${prevImage.id}`)
+        case 'ArrowRight':
+          const nextImage = images[(index + 1) % images.length]
+          return router.replace(`/galleries/${id}/${nextImage.id}`)
+        case 'ArrowUp':
+          return setMaximised(true)
+        case 'ArrowDown':
+          return setMaximised(false)
+        case 'Escape':
+          return exit()
+      }
     }
   }
 
@@ -117,11 +119,13 @@ export default function Gallery(props) {
           })
         }
       </p>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
+      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
         {
-          images.map(image => (
-            <ImagePreview key={image.id} {...image} />
-          ))
+          images.map((image, i) => {
+            const isCallout = (i % 12) === 0
+            const size = isCallout ? 'medium' : 'small'
+            return <ImagePreview key={image.id} {...image} className={ isCallout ? 'md:col-span-2 md:row-span-2' : '' } size={size} />
+          })
         }
       </div>
       <Overlay {...props} />
