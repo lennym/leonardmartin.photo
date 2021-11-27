@@ -110,7 +110,7 @@ export default function Basket({ stripeKey }) {
               !loading && (
                 <Fragment>
                   <p className="mb-6">
-                    <label htmlFor="amount">Total</label>
+                    <label htmlFor="amount">Total (pay what you like)</label>
                     <div className="flex items-center">
                       <span className="mr-2">£</span>
                       <input className="p-2 rounded-md border flex-grow text-right" type="text" id="amount" onChange={e => setAmount(e.target.value)} value={amount} />
