@@ -12,7 +12,9 @@ app.prepare().then(() => {
   createServer((req, res) => {
     console.log(req.headers);
     if (!req.headers.host.match(/localhost/) && req.headers['x-forwarded-proto'] === 'http') {
-      res.redirect(301, `https://${req.headers.host}${req.url}`)
+      res.statusCode = 301;
+      res.setHeader('Location', `https://${req.headers.host}${req.url}`)
+      return res.send()
     }
     const parsedUrl = parse(req.url, true)
     handle(req, res, parsedUrl)
