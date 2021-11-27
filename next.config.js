@@ -27,7 +27,7 @@ module.exports = {
         has: [
           {
             type: 'host',
-            value: '^localhost',
+            value: 'leonardmartin.photo',
           },
         ],
         headers: [
