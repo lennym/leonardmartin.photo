@@ -29,6 +29,10 @@ module.exports = {
             type: 'host',
             value: 'leonardmartin.photo',
           },
+          {
+            type: 'host',
+            value: '*.leonardmartin.photo',
+          },
         ],
         headers: [
           {
