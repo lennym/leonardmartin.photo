@@ -24,16 +24,6 @@ module.exports = {
     return [
       {
         source: '/(.*)',
-        has: [
-          {
-            type: 'host',
-            value: 'leonardmartin.photo',
-          },
-          {
-            type: 'host',
-            value: '*.leonardmartin.photo',
-          },
-        ],
         headers: [
           {
             key: 'Strict-Transport-Security',
