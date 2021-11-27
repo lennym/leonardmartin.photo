@@ -18,5 +18,25 @@ module.exports = {
         destination: '/api/download/:id'
       }
     ]
+  },
+
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        has: [
+          {
+            type: 'host',
+            value: '^localhost',
+          },
+        ],
+        headers: [
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=1000; includeSubDomains; preload'
+          }
+        ]
+      }
+    ]
   }
 }
