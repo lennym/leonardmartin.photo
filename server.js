@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 3000
 
 app.prepare().then(() => {
   createServer((req, res) => {
-    if (!req.headers.host.match(/localhost/) && req.headers['x-forwarded-proto'] !== 'https') {
+    console.log(req.headers);
+    if (!req.headers.host.match(/localhost/) && req.headers['x-forwarded-proto'] === 'http') {
       res.redirect(301, `https://${req.headers.host}${req.url}`)
     }
     const parsedUrl = parse(req.url, true)
