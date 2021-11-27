@@ -20,7 +20,7 @@ export default function Layout({ children, ...pageProps }) {
           <header className="py-6 border-b mb-8 flex justify-between items-center">
             <h1 className="text-2xl my-0"><Link href="/"><a><span className="text-gray-500">leonardmartin</span><span className="text-red-500">.photo</span></a></Link></h1>
             <nav className="flex flex-0 items-center text-gray-500">
-              <Link href="/about"><a className="ml-4 hidden sm:inline">About me</a></Link>
+              <Link href="/about"><a className="ml-4 hidden sm:inline">About</a></Link>
               <Link href="/galleries"><a className="ml-4 hidden sm:inline">Galleries</a></Link>
               <Basket className="ml-4" />
             </nav>

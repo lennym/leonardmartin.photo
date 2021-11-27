@@ -25,7 +25,6 @@ export default function Home({ galleries }) {
           <p className="mb-12 lg:mb-16 text-gray-500 text-lg md:text-2xl">Freelance sports photographer</p>
 
           <p className="mb-12 flex flex-wrap">
-            <Link href="/about"><a className="btn mb-2">About me</a></Link>
             <Link href="/galleries"><a className="btn mb-2">Browse galleries</a></Link>
           </p>
         </div>
