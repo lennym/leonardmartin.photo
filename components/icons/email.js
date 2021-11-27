@@ -1,6 +1,6 @@
 export default function Dustbin({ size = 32, className = '' }) {
   return <svg version="1.1" viewBox="0 0 20 16" width={size} height={size} className={className} fill="currentColor">
-    <g id="Icons" stroke="none" stroke-width="1">
+    <g id="Icons" stroke="none" strokeWidth="1">
         <g id="Outlined" transform="translate(-918.000000, -1220.000000)">
             <g id="Communication" transform="translate(100.000000, 1162.000000)">
                 <g id="Outlined-/-Communication-/-email" transform="translate(816.000000, 54.000000)">

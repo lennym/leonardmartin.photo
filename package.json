@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "npm run migrate && next build",
-    "start": "next start -p $PORT",
+    "start": "NODE_ENV=production node server.js",
     "migrate": "knex migrate:latest"
   },
   "dependencies": {
