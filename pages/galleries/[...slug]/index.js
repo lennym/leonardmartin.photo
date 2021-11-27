@@ -52,7 +52,16 @@ function Overlay({ id, imageId, title, index, images }) {
   const { exif } = images.find(i => i.id === imageId)
 
   const handlers = useSwipeable({
-    onSwiped: ({ dir }) => navigate(dir === 'Left' ? 'next': 'previous')
+    onSwiped: ({ dir }) => {
+      switch (dir) {
+        case 'Left':
+          return navigate('next')
+        case 'Right':
+          return navigate('previous')
+        case 'Down':
+          return exit()
+      }
+    }
   });
 
   const exit = () => {

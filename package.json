@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "npm run migrate && next build",
     "start": "NODE_ENV=production node server.js",
     "migrate": "knex migrate:latest"
