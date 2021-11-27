@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 3000
 
 app.prepare().then(() => {
   createServer((req, res) => {
-    console.log(req.headers);
     if (!req.headers.host.match(/localhost/) && req.headers['x-forwarded-proto'] === 'http') {
       res.statusCode = 301;
       res.setHeader('Location', `https://${req.headers.host}${req.url}`)
