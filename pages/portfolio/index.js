@@ -17,7 +17,6 @@ export default function Portfolio() {
 
       <p className="max-w-screen-lg mx-auto">I am a strong believer in promoting women's sport, in particular in non-traditional sports such as cricket and rugby.</p>
 
-      <p className="max-w-screen-lg mx-auto">When I'm not taking photos I also run with London Heathside Athletics Club, focussing on ultramarathon and mountain races, although I have been known to race on the roads occasionally too.</p>
 
       <div className="-mx-6 mb-12 grid grid-cols-1 sm:grid-cols-2 gap-1">
         <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/rugby.jpg" layout="fill" /></div>
@@ -37,6 +36,19 @@ export default function Portfolio() {
         <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/cts.jpg" layout="fill" /></div>
         <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/fast-friday.jpg" layout="fill" /></div>
         <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/xnrg.jpg" layout="fill" /></div>
+      </div>
+
+      <p className="max-w-screen-lg mx-auto">When I'm not taking photos I also run with London Heathside Athletics Club, focussing on ultramarathon and mountain races, although I have been known to race on the roads occasionally too.</p>
+
+      <div className="-mx-6 mb-12 grid grid-cols-1 sm:grid-cols-2 gap-1">
+        <div>
+          <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/ccc.jpg" layout="fill" /></div>
+          <p className="mb-0 text-gray-400 text-sm text-right">CCC, Chamonix, France</p>
+        </div>
+        <div>
+          <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/eiger.jpg" layout="fill" /></div>
+          <p className="mb-0 text-gray-400 text-sm text-right">Eiger Ultra Trail, Grindelwald, Switzerland</p>
+        </div>
       </div>
 
       <h2>Contact</h2>
