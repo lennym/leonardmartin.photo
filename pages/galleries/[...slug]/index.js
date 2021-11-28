@@ -119,7 +119,7 @@ function Overlay({ id, imageId, title, index, images }) {
 
   return <div className="fixed inset-0 flex flex-col md:flex-row" {...handlers} >
     <div className="absolute inset-0 w-full h-full bg-cover bg-gray-200" style={style} onClick={exit} />
-    <div className="flex-grow m-2 md:m-6 relative z-1 md:mr-4">
+    <div className="flex-grow m-1 md:m-4 relative z-1 md:mr-4">
       {
         maximised && (
           <a onClick={exit} className="absolute z-10 top-4 right-6 p-1 bg-gray-300 rounded-full flex cursor-pointer">
@@ -131,12 +131,12 @@ function Overlay({ id, imageId, title, index, images }) {
     </div>
     {
       !maximised && (
-        <div className="md:w-72 bg-gray-100 md:ml-0 p-4 relative z-1 m-2 md:m-6 shadow-md rounded-md">
-          <a onClick={exit} className="absolute top-4 right-4 p-1 bg-gray-300 rounded-full flex cursor-pointer">
+        <div className="md:w-72 bg-gray-100 md:ml-0 p-2 md:p-4 relative z-1 m-1 mt-0 md:m-4 shadow-md rounded-md">
+          <a onClick={exit} className="absolute top-4 right-2 md:right-4 p-1 bg-gray-300 rounded-full flex cursor-pointer">
             <CloseIcon size={20} className="text-white" />
           </a>
-          <h2 className="mb-2">{title}</h2>
-          <p className="text-base text-gray-400 mb-4">{ index+1 }/{ images.length}</p>
+          <h2 className="hidden portrait:block md:block mb-2">{title}</h2>
+          <p className="hidden portrait:block md:block text-base text-gray-400 mb-4">{ index+1 }/{ images.length}</p>
           <Exif {...exif} />
           <p className="mb-0 text-base">
             <button className="btn" onClick={() => addToBasket(imageId)}>{ inBasket ? 'Remove from download' : 'Add to download' }</button>
