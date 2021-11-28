@@ -17,7 +17,7 @@ export default function GalleryPreview({ className, cover, title, id, updated, t
             <p className="mb-0 text-gray-400 text-base">
               {
                 tags.map(tag => {
-                  return <span key={tag} className="inline-block bg-gray-100 rounded-md px-2 mr-1 mb-1">{tag}</span>
+                  return <Link href={`/galleries?tags=${tag}`}><a key={tag} className="inline-block bg-gray-100 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</a></Link>
                 })
               }
             </p>

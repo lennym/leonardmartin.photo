@@ -170,7 +170,7 @@ export default function Gallery(props) {
       <p>
         {
           tags.map(tag => {
-            return <span key={tag} className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</span>
+            return <Link href={`/galleries?tags=${tag}`}><a key={tag} className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</a></Link>
           })
         }
       </p>
