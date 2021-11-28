@@ -25,7 +25,11 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      screens: {
+        portrait: {'raw': '(orientation: portrait)'}
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/aspect-ratio')

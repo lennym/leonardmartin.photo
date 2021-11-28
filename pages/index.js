@@ -22,7 +22,7 @@ export default function Home({ galleries }) {
         <div className="mr-6 lg: mr-12">
           <h1 className="text-gray-500 mb-2">leonardmartin<span className="text-red-500">.photo</span></h1>
 
-          <p className="mb-12 lg:mb-16 text-gray-500 text-lg md:text-2xl">Freelance sports photographer</p>
+          <p className="mb-12 lg:mb-16 text-gray-500 text-lg md:text-2xl">Sports photographer</p>
 
           <p className="mb-12 flex flex-wrap">
             <Link href="/galleries"><a className="btn mb-2">Browse galleries</a></Link>
