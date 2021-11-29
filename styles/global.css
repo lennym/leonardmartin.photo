@@ -49,8 +49,8 @@
   section,
   footer {
     @apply w-full;
-    @apply px-6;
-    @apply sm:px-10;
+    @apply px-2;
+    @apply sm:px-8;
     @apply md:px-16;
   }
 
