@@ -7,7 +7,7 @@ import StripeCheckout from 'react-stripe-checkout'
 import Image from '../../components/image'
 import Dustbin from '../../components/icons/dustbin'
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
       stripeKey: process.env.STRIPE_KEY_PUBLIC

@@ -1,5 +1,9 @@
 import Image from 'next/image'
 
+export async function getStaticProps() {
+  return { props: {} }
+}
+
 export default function Portfolio() {
   return (
     <section className="text-center">
