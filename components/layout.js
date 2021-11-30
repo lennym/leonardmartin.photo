@@ -13,7 +13,7 @@ export default function Layout({ children, ...pageProps }) {
       <Head>
         <title>leonardmartin.photo</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       {
         pageProps.header !== false && (
