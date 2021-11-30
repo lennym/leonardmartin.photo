@@ -31,6 +31,8 @@ export default function Layout({ children, ...pageProps }) {
         pageProps.header === false && (
           <header className="py-6 flex justify-end items-center">
             <nav className="flex items-center text-gray-500 text-right">
+              <Link href="/about"><a className="ml-4 hidden sm:inline">About</a></Link>
+              <Link href="/galleries"><a className="ml-4 hidden sm:inline">Galleries</a></Link>
               <Basket className="ml-4" />
             </nav>
           </header>
