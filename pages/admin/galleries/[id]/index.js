@@ -101,7 +101,7 @@ export default function Gallery({ id, title, updated, cover, images = [], tags=[
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 self-start gap-2">
           {
             images.map(image => (
-              <ImageThumbnail key={image.id} id={image.id} galleryId={id} coverId={coverId} onSetCover={setCover} />
+              <ImageThumbnail key={image.id} id={image.id} galleryId={id} pick={image.pick} coverId={coverId} onSetCover={setCover} />
             ))
           }
         </div>
