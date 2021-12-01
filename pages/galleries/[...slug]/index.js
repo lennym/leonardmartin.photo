@@ -16,7 +16,6 @@ export async function getServerSideProps({ params }) {
   const props = await getGallery(galleryId)
   if (imageId) {
     props.imageId = imageId
-    props.index = props.images.findIndex(i => i.id === imageId)
   }
   return {
     props
@@ -39,10 +38,11 @@ function Exif({ FNumber, ISO, Model, LensModel, ExposureTime }) {
   </div>
 }
 
-function Overlay({ id, imageId, title, index, images }) {
+function Overlay({ id, imageId, title, images }) {
   if (!imageId) {
     return null
   }
+  const index = images.findIndex(image => image.id === imageId)
   const router = useRouter()
   const [maximised, setMaximised] = useState(false)
   const { data, mutate } = useSWR('/api/basket', url => fetch(url).then(response => response.json()))
@@ -65,17 +65,20 @@ function Overlay({ id, imageId, title, index, images }) {
   });
 
   const exit = () => {
-    return router.replace(`/galleries/${id}`)
+    return router.replace(`/galleries/${id}`, `/galleries/${id}`, { scroll: false })
   }
 
   const navigate = direction => {
+    let url
     switch (direction) {
       case 'previous':
         const prevImage = images[(index - 1 + images.length) % images.length]
-        return router.replace(`/galleries/${id}/${prevImage.id}`)
+        url = `/galleries/${id}/${prevImage.id}`
+        return router.replace(url, url, { scroll: false })
       case 'next':
         const nextImage = images[(index + 1) % images.length]
-        return router.replace(`/galleries/${id}/${nextImage.id}`)
+        url = `/galleries/${id}/${nextImage.id}`
+        return router.replace(url, url, { scroll: false })
     }
   }
 
@@ -148,7 +151,16 @@ function Overlay({ id, imageId, title, index, images }) {
 }
 
 export default function Gallery(props) {
-  const { title, updated, images, tags } = props
+  let images = props.images
+  const hasPicks = images.some(image => image.pick)
+  const router = useRouter()
+  const [selected, setSelected] = useState(hasPicks && router.query.selected !== 'all')
+  const { id, title, updated, tags } = props
+
+  if (selected) {
+    images = images.filter(image => image.pick)
+  }
+
   const getCallout = index => {
     const callout = {
       sm: (index % 7 === 0),
@@ -161,6 +173,16 @@ export default function Gallery(props) {
     }, [`index-${index}`]).join(' ')
   }
 
+  const toggleSelected = e => {
+    e.preventDefault();
+    setSelected(!selected)
+  }
+
+  useEffect(() => {
+    const url = selected ? `/galleries/${id}` : `/galleries/${id}?selected=all`
+    router.replace(url, url, { scroll: false })
+  }, [selected])
+
   return (
     <section>
       <h1 className="mb-6">{ title }</h1>
@@ -170,18 +192,35 @@ export default function Gallery(props) {
       <p>
         {
           tags.map(tag => {
-            return <Link href={`/galleries?tags=${tag}`}><a key={tag} className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</a></Link>
+            return <Link href={`/galleries?tags=${tag}`} key={tag}><a key={tag} className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1">{tag}</a></Link>
           })
         }
       </p>
-      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
-        {
-          images.map((image, i) => {
-            return <ImagePreview key={image.id} {...image} className={getCallout(i)} size="small" />
-          })
-        }
-      </div>
-      <Overlay {...props} />
+
+      {
+        selected ?
+          <p><span className="text-gray-400">Showing:</span> Highlights | <Link href={`/galleries/${id}?selected=all`}><a onClick={toggleSelected}>All</a></Link></p> :
+          <p><span className="text-gray-400">Showing:</span> <Link href={`/galleries/${id}`}><a onClick={toggleSelected}>Highlights</a></Link> | All</p>
+      }
+
+      {
+        selected ?
+          <div className="grid grid-cols-1 gap-1 md:grid-cols-2 mb-12">
+            {
+              images.map((image, i) => {
+                return <ImagePreview key={image.id} {...image} size="medium" />
+              })
+            }
+          </div> :
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
+            {
+              images.map((image, i) => {
+                return <ImagePreview key={image.id} {...image} className={getCallout(i)} size="small" />
+              })
+            }
+          </div>
+      }
+      <Overlay {...props} images={images} />
     </section>
   )
 }

@@ -10,10 +10,11 @@ import ImagePreview from '../../../../components/image-preview'
 
 export const getServerSideProps = withAuthGateway(withGallery())
 
-function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
+function ImageThumbnail({ id, pick, galleryId, coverId, onSetCover }) {
   const [refreshing, setRefreshing] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [cachebuster, setCacheBuster] = useState('')
+  const [isPick, setPick] = useState(pick)
   const router = useRouter();
 
   const refresh = async () => {
@@ -39,13 +40,25 @@ function ImageThumbnail({ id, galleryId, coverId, onSetCover }) {
     router.reload()
   }
 
+  const togglePick = async () => {
+    const response = await fetch(`/api/admin/galleries/${galleryId}/pick`, {
+      method: 'POST',
+      body: JSON.stringify({ id, pick: !isPick }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const result = await response.json()
+    setPick(result.pick)
+  }
+
   return <div className="relative">
     <div className="absolute z-10 top-1 right-1 w-4 h-4">
       <input type="radio" name="cover" value={id} checked={id === coverId} onChange={e => onSetCover(e.target.value)} />
       <button onClick={() => refresh()} disabled={refreshing}>{refreshing ? '⏱' : '⟲'}</button>
       <button onClick={() => deleteImage()} disabled={deleting}>{deleting ? '⏱' : '🚫'}</button>
     </div>
-    <Image src={`/preview/${galleryId}/${id}?size=small&cachebuster=${cachebuster}`} className="relative z-0" />
+    <div className={`relative z-0 box-border ${isPick ? 'border border-4 -m-1 border-red-500' : ''}`} onClick={() => togglePick()}>
+      <Image src={`/preview/${galleryId}/${id}?size=small&cachebuster=${cachebuster}`} />
+    </div>
   </div>
 
 }
