@@ -197,7 +197,7 @@ export default function Gallery(props) {
   useEffect(() => {
     if (!props.imageId) {
       const url = selected ? `/galleries/${id}` : `/galleries/${id}?selected=all`
-      router.replace(url, url, { scroll: false })
+      router.replace(url)
     }
   }, [selected])
 
@@ -223,17 +223,20 @@ export default function Gallery(props) {
 
       {
         selected ?
-          <div className="grid grid-cols-1 gap-1 md:grid-cols-2 mb-12">
-            <ImagePreview id={cover} gallery_id={id} size="medium" className="md:col-span-2" />
-            {
-              images.map((image, i) => {
-                if (image.id === cover) {
-                  return null
-                }
-                return <ImagePreview key={image.id} {...image} size="medium" />
-              })
-            }
-          </div> :
+          <Fragment>
+            <div className="grid grid-cols-1 gap-1 md:grid-cols-2 mb-12">
+              <ImagePreview id={cover} gallery_id={id} size="medium" className="md:col-span-2" />
+              {
+                images.map((image, i) => {
+                  if (image.id === cover) {
+                    return null
+                  }
+                  return <ImagePreview key={image.id} {...image} size="medium" />
+                })
+              }
+            </div>
+            <p><Link href={`/galleries/${id}?selected=all`}><a className="btn" onClick={() => setSelected(false)}>Show all photos</a></Link></p>
+          </Fragment> :
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-12">
             {
               images.map((image, i) => {
