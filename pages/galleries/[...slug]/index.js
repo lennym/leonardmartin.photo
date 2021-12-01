@@ -170,7 +170,7 @@ export default function Gallery(props) {
   let images = props.images
   const hasPicks = images.some(image => image.pick)
   const router = useRouter()
-  const [selected, setSelected] = useState(hasPicks && router.query.selected !== 'all')
+  const [selected, setSelected] = useState(!props.imageId && hasPicks && router.query.selected !== 'all')
   const { id, title, updated, cover, tags } = props
 
   if (selected) {
@@ -195,8 +195,10 @@ export default function Gallery(props) {
   }
 
   useEffect(() => {
-    const url = selected ? `/galleries/${id}` : `/galleries/${id}?selected=all`
-    router.replace(url, url, { scroll: false })
+    if (!props.imageId) {
+      const url = selected ? `/galleries/${id}` : `/galleries/${id}?selected=all`
+      router.replace(url, url, { scroll: false })
+    }
   }, [selected])
 
   return (
