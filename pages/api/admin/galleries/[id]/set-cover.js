@@ -8,7 +8,7 @@ const SetCoverPage = withApiAuthGateway(async function(req, res) {
 
     const { cover } = req.body;
     await knex('galleries').where({ id }).update({ cover });
-    await knex('image').where({ id: cover }).update({ pick: true });
+    await knex('images').where({ id: cover }).update({ pick: true });
 
     return res.json({ cover })
   }
