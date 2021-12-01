@@ -171,10 +171,10 @@ export default function Gallery(props) {
   const hasPicks = images.some(image => image.pick)
   const router = useRouter()
   const [selected, setSelected] = useState(hasPicks && router.query.selected !== 'all')
-  const { id, title, updated, tags } = props
+  const { id, title, updated, cover, tags } = props
 
   if (selected) {
-    images = images.filter(image => image.pick)
+    images = images.filter(image => image.pick || image.id === cover)
   }
 
   const getCallout = index => {
@@ -222,8 +222,12 @@ export default function Gallery(props) {
       {
         selected ?
           <div className="grid grid-cols-1 gap-1 md:grid-cols-2 mb-12">
+            <ImagePreview id={cover} gallery_id={id} size="medium" className="md:col-span-2" />
             {
               images.map((image, i) => {
+                if (image.id === cover) {
+                  return null
+                }
                 return <ImagePreview key={image.id} {...image} size="medium" />
               })
             }
