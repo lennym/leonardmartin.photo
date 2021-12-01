@@ -6,8 +6,8 @@ import { useSwipeable } from 'react-swipeable';
 
 import getGallery from '../../../lib/get-gallery'
 import withSessionSsr from '../../../lib/session'
-import ImagePreview from '../../../components/image-preview'
-import Image from 'next/image'
+import NextImage from 'next/image'
+import Image from '../../../components/image'
 import TimeStamp from '../../../components/date'
 import CloseIcon from '../../../components/icons/close'
 
@@ -20,6 +20,22 @@ export async function getServerSideProps({ params }) {
   return {
     props
   }
+}
+
+function ImagePreview({ className = '', gallery_id, id, size = 'small' }) {
+  const router = useRouter()
+  const url = `/galleries/${gallery_id}/${id}`
+  const open = e => {
+    e.preventDefault()
+    router.push(url, url, { scroll: false })
+  }
+  return (
+    <div className={`${className} bg-white shadow-md rounded-md overflow-hidden relative`}>
+      <a href={url} onClick={open}>
+        <Image src={`/preview/${gallery_id}/${id}?size=${size}`} objectFit="contain" unoptimized={true} />
+      </a>
+    </div>
+  )
 }
 
 function Exif({ FNumber, ISO, Model, LensModel, ExposureTime }) {
@@ -130,7 +146,7 @@ function Overlay({ id, imageId, title, images }) {
           </a>
         )
       }
-      <Image src={`/preview/${id}/${imageId}?size=medium`} layout="fill" objectFit="contain" className="shadow-lg" unoptimized={true} />
+      <NextImage src={`/preview/${id}/${imageId}?size=medium`} layout="fill" objectFit="contain" className="shadow-lg" unoptimized={true} />
     </div>
     {
       !maximised && (
