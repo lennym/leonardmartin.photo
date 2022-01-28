@@ -45,8 +45,8 @@ export default function Layout({ children, ...pageProps }) {
         <p className="mb-0">&copy; Leonard Martin</p>
         <p className="mb-0 flex">
           <a href="mailto:info@leonardmartin.photo" className="ml-2"><Email size={24} /></a>
-          <a href="https://instagram.com/leonardmartin.photo" className="ml-2"><Twitter size={24} /></a>
-          <a href="https://twitter.com/lennym" className="ml-2"><Insta size={24} /></a>
+          <a href="https://twitter.com/lennym" className="ml-2"><Twitter size={24} /></a>
+          <a href="https://instagram.com/leonardmartin.photo" className="ml-2"><Insta size={24} /></a>
         </p>
 
       </footer>
