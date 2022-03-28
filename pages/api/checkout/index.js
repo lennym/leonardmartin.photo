@@ -14,20 +14,7 @@ export default withSessionRoute(async function Checkout(req, res) {
     const basket = req.session.basket || []
 
     try {
-      const amount = req.body.amount
-      let charge
-      let email = req.body.email
-      if (amount > 0) {
-        charge = await stripe.charges.create({
-          amount,
-          currency: 'gbp',
-          description: 'Photo sale',
-          source: req.body.token.id
-        })
-      }
-      if (charge) {
-        email = get(charge, 'source.name');
-      }
+      const { amount, email } = req.body
       const order = await knex('orders').insert({ email, amount }).returning('*')
       const images = await knex('order_images').insert(basket.map(image_id => ({ image_id, order_id: order[0].id })))
       req.session.basket = []
