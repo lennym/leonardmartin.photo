@@ -47,6 +47,7 @@ export default function Layout({ children, ...pageProps }) {
           <a href="mailto:info@leonardmartin.photo" className="ml-2"><Email size={24} /></a>
           <a href="https://twitter.com/lennym" className="ml-2"><Twitter size={24} /></a>
           <a href="https://instagram.com/leonardmartin.photo" className="ml-2"><Insta size={24} /></a>
+          <a rel="me" href="https://icosahedron.website/@lennym"></a>
         </p>
 
       </footer>
