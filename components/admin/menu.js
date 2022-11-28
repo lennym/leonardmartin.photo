@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export default function AdminMenu({ className = '' }) {
-  return <ul className={`${className} rounded-md mb-4`}>
+  return <ul className={`${className} rounded-md mb-4 list-none`}>
     <li>
       <Link href="/admin/galleries"><a className="p-2 block border-t hover:bg-white">Galleries</a></Link>
     </li>
