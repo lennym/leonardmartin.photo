@@ -36,10 +36,22 @@ export default function Portfolio() {
       <p className="max-w-screen-lg mx-auto">I have worked with a number of race organisers including Centurion Running, XNRG, and SVP50/100.</p>
 
       <div className="-mx-6 mb-12 grid grid-cols-1 sm:grid-cols-2 gap-1">
-        <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/sdw.jpg" layout="fill" /></div>
-        <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/cts.jpg" layout="fill" /></div>
-        <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/fast-friday.jpg" layout="fill" /></div>
-        <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/xnrg.jpg" layout="fill" /></div>
+        <div>
+          <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/sdw.jpg" layout="fill" /></div>
+          <p className="mb-0 text-gray-400 text-sm text-right">Centurion South Downs Way 100</p>
+        </div>
+        <div>
+          <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/cts.jpg" layout="fill" /></div>
+          <p className="mb-0 text-gray-400 text-sm text-right">Endurance Life Coastal Trail Series Northumberland</p>
+        </div>
+        <div>
+          <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/fast-friday.jpg" layout="fill" /></div>
+          <p className="mb-0 text-gray-400 text-sm text-right">Fast Friday</p>
+        </div>
+        <div>
+          <div className="relative aspect-w-3 aspect-h-2"><Image src="/images/xnrg.jpg" layout="fill" /></div>
+          <p className="mb-0 text-gray-400 text-sm text-right">XNRG Tring 50k</p>
+        </div>
       </div>
 
       <p className="max-w-screen-lg mx-auto">When I'm not taking photos I also run with London Heathside Athletics Club, focussing on ultramarathon and mountain races, although I have been known to race on the roads occasionally too.</p>

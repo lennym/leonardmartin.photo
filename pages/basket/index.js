@@ -208,7 +208,7 @@ export default function Basket({ stripeKey }) {
 
                   <p className="mb-6 flex items-start">
                     <input type="checkbox" id="declaration" name="declaration" className="border border-gray-200 rounded-md w-6 h-6 mr-2" onChange={e => accept(e.target.checked)} />
-                    <label htmlFor="declaration">I understand that photos are licensed for personal use only.</label>
+                    <label htmlFor="declaration">I understand that photos are licensed for <Link href="/personal-use">personal use</Link> only.</label>
                   </p>
 
                   <p className="text-right">

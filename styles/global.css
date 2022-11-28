@@ -23,12 +23,18 @@
     @apply mb-4;
     @apply lg:mb-8;
   }
-  p {
+  p, ul {
     @apply text-lg;
     @apply md:text-xl;
-    @apply mb-6;
-    @apply lg:mb-12;
+    @apply mb-4;
+    @apply lg:mb-6;
   }
+
+  ul {
+    @apply list-disc;
+    @apply list-inside;
+  }
+
   a {
     @apply text-red-500;
   }

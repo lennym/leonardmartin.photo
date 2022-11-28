@@ -10,6 +10,7 @@ export const getServerSideProps = withAuthGateway(async function () {
   const orders = await knex('orders')
     .select('orders.*')
     .select(knex('order_images').count('*').where('order_id', knex.ref('orders.id')).as('images'))
+    .where('orders.email', '!=', 'leonard.martin@gmail.com')
     .orderBy('date', 'desc')
 
   return {
