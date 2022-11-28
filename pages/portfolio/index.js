@@ -33,7 +33,7 @@ export default function Portfolio() {
 
       <p className="max-w-screen-lg mx-auto">I have taken photos for a range of races from league and championship XC races, through track and field athletics, to 100 mile ultramarathons.</p>
 
-      <p className="max-w-screen-lg mx-auto">I have worked with a number of race organisers including Centurion Running, XNRG, and SVP50/100.</p>
+      <p className="max-w-screen-lg mx-auto">I have worked with a number of race organisers including Centurion Running, Canary Trail Events, Endurance Life, XNRG, and SVP50/100.</p>
 
       <div className="-mx-6 mb-12 grid grid-cols-1 sm:grid-cols-2 gap-1">
         <div>
