@@ -73,7 +73,7 @@ export default function Portfolio() {
 
       <h2>Follow Me</h2>
 
-      <p className="max-w-screen-lg mx-auto">You can find me on instagram at <a href="https://instagram.com/leonardmartin.photo">@leonardmartin.photo</a> and twitter at <a href="https://twitter.com/lennym">@lennym</a>.</p>
+      <p className="max-w-screen-lg mx-auto">You can find me on instagram at <a href="https://instagram.com/leonardmartin.photo">@leonardmartin.photo</a>.</p>
 
     </section>
   )
