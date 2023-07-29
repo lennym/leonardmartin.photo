@@ -19,7 +19,7 @@ export default function Portfolio() {
 
       <p className="max-w-screen-lg mx-auto">My work has appeared in print in magazines such as Women's Running and Outdoor Swimmer, as well as many local newspapers in the London area including Ham&High, Hackney Gazette and Islington Tribune.</p>
 
-      <p className="max-w-screen-lg mx-auto">I am a strong believer in promoting women's sport, in particular in non-traditional sports such as cricket and rugby.</p>
+      <p className="max-w-screen-lg mx-auto">I am a strong believer in promoting, supporting, and advocating for women's sport, in particular in non-traditional sports such as cricket and rugby.</p>
 
 
       <div className="-mx-6 mb-12 grid grid-cols-1 sm:grid-cols-2 gap-1">
