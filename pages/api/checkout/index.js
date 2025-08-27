@@ -27,7 +27,7 @@ export default withSessionRoute(async function Checkout(req, res) {
         try {
           await sendConfirmation(email, order[0].id);
         } catch (e) {
-          console.error(error);
+          console.error(e);
         }
       }
       res.status(200).json({ ...order[0], images: basket });
