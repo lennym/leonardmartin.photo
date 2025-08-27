@@ -28,6 +28,7 @@ export default withSessionRoute(async function Checkout(req, res) {
       }
       res.status(200).json({ ...order[0], images: basket });
     } catch (error) {
+      console.error(error);
       res
         .status(get(error, 'raw.statusCode') || 500)
         .json({ error: error.message });
