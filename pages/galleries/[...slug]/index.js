@@ -14,7 +14,7 @@ import getGallery from '../../../lib/get-gallery';
 export async function getStaticPaths() {
   const galleries = await getGalleries();
   return {
-    paths: galleries.map((g) => `/galleries/${g.id}`),
+    paths: [],
     fallback: 'blocking',
   };
 }
