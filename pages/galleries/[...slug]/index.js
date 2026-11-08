@@ -8,9 +8,18 @@ import NextImage from 'next/image';
 import TimeStamp from '../../../components/date';
 import CloseIcon from '../../../components/icons/close';
 import Image from '../../../components/image';
+import getGalleries from '../../../lib/get-galleries';
 import getGallery from '../../../lib/get-gallery';
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
+  const galleries = await getGalleries();
+  return {
+    paths: galleries.map((g) => `/galleries/${g.id}`),
+    fallback: 'blocking',
+  };
+}
+
+export async function getStaticProps({ params }) {
   const [galleryId, imageId] = params.slug;
   const props = await getGallery(galleryId);
   if (imageId) {
@@ -18,6 +27,7 @@ export async function getServerSideProps({ params }) {
   }
   return {
     props,
+    revalidate: 600,
   };
 }
 
@@ -196,7 +206,7 @@ function Overlay({ id, imageId, title, images }) {
 }
 
 export default function Gallery(props) {
-  let images = props.images;
+  let images = props.images || [];
   const hasPicks = images.some((image) => image.pick);
   const router = useRouter();
   const [selected, setSelected] = useState(

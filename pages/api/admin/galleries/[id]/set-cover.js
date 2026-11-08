@@ -9,6 +9,10 @@ const SetCoverPage = withApiAuthGateway(async function (req, res) {
     const { cover } = req.body;
     await knex('galleries').where({ id }).update({ cover });
 
+    await res.revalidate('/');
+    await res.revalidate('/galleries');
+    await res.revalidate(`/galleries/${id}`);
+
     return res.json({ cover });
   }
   return res.status(400).json({});

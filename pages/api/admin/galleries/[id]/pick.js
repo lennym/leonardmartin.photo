@@ -1,17 +1,22 @@
-import { database } from '../../../../../knex'
-import { withApiAuthGateway } from '../../../../../lib/session'
+import { database } from '../../../../../knex';
+import { withApiAuthGateway } from '../../../../../lib/session';
 
-const SetPick = withApiAuthGateway(async function(req, res) {
-  const { id } = req.query
+const SetPick = withApiAuthGateway(async function (req, res) {
+  const { id } = req.query;
   if (req.method === 'POST') {
-    const knex = await database()
+    const knex = await database();
 
     const { id, pick } = req.body;
-    const image = await knex('images').where({ id }).update({ pick }).returning('*');
+    const image = await knex('images')
+      .where({ id })
+      .update({ pick })
+      .returning('*');
 
-    return res.json(image[0])
+    await res.revalidate(`/galleries/${image[0].gallery_id}`);
+
+    return res.json(image[0]);
   }
-  return res.status(400).json({})
-})
+  return res.status(400).json({});
+});
 
-export default SetPick
+export default SetPick;
