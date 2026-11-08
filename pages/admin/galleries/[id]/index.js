@@ -89,8 +89,8 @@ export default function Gallery({
 }) {
   const [coverId, setCover] = useState(cover);
 
-  useEffect(async () => {
-    await fetch(`/api/admin/galleries/${id}/set-cover`, {
+  useEffect(() => {
+    fetch(`/api/admin/galleries/${id}/set-cover`, {
       method: 'POST',
       body: JSON.stringify({ cover: coverId }),
       headers: { 'Content-Type': 'application/json' },
