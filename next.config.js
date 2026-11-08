@@ -3,21 +3,21 @@ module.exports = {
     return [
       {
         source: '/preview/:gallery/:image',
-        destination: '/api/preview?image=:image'
+        destination: '/api/preview?image=:image',
       },
       {
         source: '/admin',
-        destination: '/admin/galleries'
+        destination: '/admin/galleries',
       },
       {
         source: '/about',
-        destination: '/portfolio'
+        destination: '/portfolio',
       },
       {
         source: '/orders/:id/download',
-        destination: '/api/download/:id'
-      }
-    ]
+        destination: '/api/download/:id',
+      },
+    ];
   },
 
   async headers() {
@@ -27,10 +27,10 @@ module.exports = {
         headers: [
           {
             key: 'Strict-Transport-Security',
-            value: 'max-age=1000; includeSubDomains; preload'
-          }
-        ]
-      }
-    ]
-  }
-}
+            value: 'max-age=1000; includeSubDomains; preload',
+          },
+        ],
+      },
+    ];
+  },
+};
