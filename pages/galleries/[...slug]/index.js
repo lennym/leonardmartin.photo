@@ -22,6 +22,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const [galleryId, imageId] = params.slug;
   const props = await getGallery(galleryId);
+  if (!props) {
+    return { notFound: true };
+  }
   if (imageId) {
     props.imageId = imageId;
   }
