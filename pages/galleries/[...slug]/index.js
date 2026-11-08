@@ -250,13 +250,12 @@ export default function Gallery(props) {
       <p>
         {tags.map((tag) => {
           return (
-            <Link href={`/galleries?tags=${tag}`} key={tag}>
-              <a
-                key={tag}
-                className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1"
-              >
-                {tag}
-              </a>
+            <Link
+              href={`/galleries?tags=${tag}`}
+              key={tag}
+              className="inline-block bg-gray-200 text-gray-400 rounded-md px-2 mr-1 mb-1"
+            >
+              {tag}
             </Link>
           );
         })}
@@ -266,15 +265,18 @@ export default function Gallery(props) {
         (selected ? (
           <p>
             <span className="text-gray-400">Showing:</span> Highlights |{' '}
-            <Link href={`/galleries/${id}?selected=all`}>
-              <a onClick={toggleSelected}>All</a>
+            <Link
+              href={`/galleries/${id}?selected=all`}
+              onClick={toggleSelected}
+            >
+              All
             </Link>
           </p>
         ) : (
           <p>
             <span className="text-gray-400">Showing:</span>{' '}
-            <Link href={`/galleries/${id}`}>
-              <a onClick={toggleSelected}>Highlights</a>
+            <Link href={`/galleries/${id}`} onClick={toggleSelected}>
+              Highlights
             </Link>{' '}
             | All
           </p>
@@ -297,10 +299,12 @@ export default function Gallery(props) {
             })}
           </div>
           <p>
-            <Link href={`/galleries/${id}?selected=all`}>
-              <a className="btn" onClick={() => setSelected(false)}>
-                Show all photos
-              </a>
+            <Link
+              href={`/galleries/${id}?selected=all`}
+              className="btn"
+              onClick={() => setSelected(false)}
+            >
+              Show all photos
             </Link>
           </p>
         </Fragment>
