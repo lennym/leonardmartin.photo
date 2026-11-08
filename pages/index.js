@@ -60,6 +60,9 @@ export default function Home({ galleries }) {
               {...gallery}
             />
           ))}
+          {galleries.slice(2).map((gallery) => (
+            <GalleryPreview key={gallery.id} {...gallery} />
+          ))}
         </div>
         <p>
           <Link href="/galleries" className="btn">
